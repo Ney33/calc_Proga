@@ -1,40 +1,3 @@
-<<<<<<< Updated upstream
-
-    const form = document.forms["calculator"];
-    const display = form["resp"];
-    const buttons = form.querySelectorAll("input[type='button']");
-
-    buttons.forEach(button => {
-        button.addEventListener("click", () => {
-            const value = button.value;
-
-            if (value === "=") {
-                calcular();
-            } else if (value === "ac") {
-                limpiar();
-            } else {
-                agregarValor(value);
-            }
-        });
-    });
-
-    function agregarValor(valor) {
-        display.value += valor;
-    }
-
-    function limpiar() {
-        display.value = "";
-    }
-
-    function calcular() {
-        try {
-            display.value = eval(display.value);
-        } catch (error) {
-            display.value = "Error";
-        }
-    }
-
-=======
 const form = document.forms["calculator"];
 const display = form["resp"];
 const buttons = form.querySelectorAll("input[type='button']");
@@ -47,13 +10,13 @@ buttons.forEach(button => {
         const value = button.value;
 
         if (value === "=") {
-            calcular();
+            calculate();
         } 
         else if (value === "ac") {
-            limpiar();
+            clean();
         } 
         else {
-            agregarValor(value);
+            addValue(value);
         }
     });
 });
@@ -61,19 +24,19 @@ buttons.forEach(button => {
 // ------------------------
 // Funciones principales
 // ------------------------
-function agregarValor(valor) {
+function addValue(value) {
     if (display.value === "Error") {
         display.value = "";
     }
-    display.value += valor;
+    display.value += value;
 }
 
 
-function limpiar() {
+function clean() {
     display.value = "";
 }
 
-function calcular() {
+function calculate() {
     const expresion = display.value;
 
     // 1️⃣ Si está vacío → no hacer nada
@@ -89,13 +52,13 @@ function calcular() {
     if (expresion === "Error") return;
 
     try {
-        const resultado = eval(expresion);
+        const result = eval(expresion);
 
         // 4️⃣ Si resultado es undefined o infinito
-        if (resultado === undefined || !isFinite(resultado)) {
+        if (result === undefined || !isFinite(result)) {
             display.value = "Error";
         } else {
-            display.value = resultado;
+            display.value = result;
         }
 
     } catch (error) {
@@ -112,18 +75,18 @@ document.addEventListener("keydown", (event) => {
 
     // Números
     if (!isNaN(key) && key !== " ") {
-        agregarValor(key);
+        addValue(key);
     }
 
     // Operadores
     else if (["+", "-", "*", "/"].includes(key)) {
-        agregarValor(key);
+        addValue(key);
     }
 
     // Enter = calcular
     else if (key === "Enter") {
         event.preventDefault();
-        calcular();
+        calculate();
     }
 
     // Backspace = borrar último carácter
@@ -133,12 +96,10 @@ document.addEventListener("keydown", (event) => {
 
     // Escape = limpiar
     else if (key === "Escape") {
-        limpiar();
+        clean();
     }
 
     window.onload = () => {
     display.focus();
 };
 });
-
->>>>>>> Stashed changes
